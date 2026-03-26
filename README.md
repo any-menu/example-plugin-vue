@@ -1,4 +1,4 @@
-# AnyMenu Plugin Simple
+# AnyMenu Plugin Vue
 
 > 这是 [AnyMenu](https://github.com/any-menu/any-menu) 的插件开发模板
 
@@ -20,4 +20,10 @@ $ npm run build
 
 ## 从零生成此项目 (可选)
 
-详见 [any-menu/example-plugin-simple](https://github.com/any-menu/example-plugin-simple)
+先基于 [any-menu/example-plugin-simple](https://github.com/any-menu/example-plugin-simple)
+
+然后使用 vue:
+
+```bash
+npm install vue
+```

@@ -15,29 +15,42 @@ import cssText from './style.css?inline';
 
 import type { PluginInterface, PluginInterfaceCtx } from '../types/any-menu';
 
-export default class HelloWorldPlugin implements PluginInterface {
+let cache_ctx: PluginInterfaceCtx | undefined
+
+export default class ExamplePluginVue implements PluginInterface {
   metadata = {
-    id: 'hello-world',
-    name: 'Hello World',
+    id: 'example-plugin-vue',
+    name: 'Example Plugin Vue',
     version: '1.0.0',
     min_app_version: '1.1.0',
     author: 'your-name',
-    description: 'A minimal AnyMenu plugin template that prints Hello World.',
+    description: 'A minimal AnyMenu plugin template based on Vue.',
     icon: 'lucide-printer',
     css: cssText,
   };
 
   onLoad(): void {
-    console.log('[HelloWorld] Plugin loaded');
+    console.log('[ExamplePluginVue] Plugin loaded');
   }
 
   onUnload(): void {
-    console.log('[HelloWorld] Plugin unloaded');
+    if (cache_ctx) cache_ctx.api.unregisterSubPanel('example-plugin-vue-panel')
+    console.log('[ExamplePluginVue] Plugin unloaded');
   }
 
   async run(ctx: PluginInterfaceCtx): Promise<void> {
-    const selected = ctx.env.selectedText;
+    // 注册面板示例
+    if (!cache_ctx) {
+      cache_ctx = ctx
+        const newPanel = document.createElement('div'); newPanel.innerText = 'New Panel Content';
+        ctx.api.registerSubPanel({
+            id: 'example-plugin-vue-panel',
+            el: newPanel
+        })
+    }
 
+    // 文本输出示例
+    const selected = ctx.env.selectedText;
     if (selected) {
       // 如果有选中文本，在其后追加问候
       ctx.api.sendText(`${selected} — Hello World!`);
