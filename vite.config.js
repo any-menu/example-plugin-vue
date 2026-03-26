@@ -5,7 +5,7 @@ export default defineConfig({
     lib: { // Library 模式：输出单个 ES 模块文件
       entry: 'src/index.ts',
       formats: ['es'],
-      fileName: () => 'hello-world.js', // 输出文件名
+      fileName: () => 'main.js', // 输出文件名
     },
     rollupOptions: {
       external: [],

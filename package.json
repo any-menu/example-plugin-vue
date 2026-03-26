@@ -1,7 +1,7 @@
 {
-  "name": "any-menu-plugin-simple",
+  "name": "any-menu-plugin-vue",
   "version": "1.0.0",
-  "description": "AnyMenu simple plugin example",
+  "description": "AnyMenu simple plugin example based on Vue.",
   "keywords": [
     "any-menu",
     "anymenu",
