@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
   build: {
@@ -21,5 +22,6 @@ export default defineConfig({
     'process.env.NODE_ENV': JSON.stringify('production'),
     'process.env': {},
     'process': {},
-  }
+  },
+  plugins: [vue()]
 });

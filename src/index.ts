@@ -14,7 +14,9 @@
 import cssText from './style.css?inline';
 
 import type { PluginInterface, PluginInterfaceCtx } from '../types/any-menu';
-import { createApp, h } from 'vue';
+
+import { createApp, ref, h } from 'vue';
+import SubPanel from './SubPanel.vue';
 
 let cache_ctx: PluginInterfaceCtx | undefined
 
@@ -43,27 +45,48 @@ export default class ExamplePluginVue implements PluginInterface {
     // 注册面板示例
     if (!cache_ctx) {
       cache_ctx = ctx
-        const newPanel = document.createElement('div'); newPanel.classList.add('example-plugin-vue-panel');
-        ctx.api.registerSubPanel({
-            id: 'example-plugin-vue-panel',
-            el: newPanel
-        })
+      const newPanel = document.createElement('div'); newPanel.classList.add('example-plugin-vue-panel');
+      ctx.api.registerSubPanel({
+          id: 'example-plugin-vue-panel',
+          el: newPanel
+      })
 
-        // 使用 Vue 渲染组件
-        createApp({
-          // name: 'ExamplePluginVuePanel',
-          // template: `
-          //   <div class="example-plugin-vue-panel-content">
-          //     <h2>Hello from Vue Panel!</h2>
-          //     <p>This is a panel registered by ExamplePluginVue.</p>
-          //   </div>
-          // `,
-          render() {
-            return h('div', 'New Vue Panel Content')
-          }
-        }).mount(newPanel);
+      // vue panel 1
+      // Vue SFC 组件 (需要 vue loader 依赖支持)
+      const panel1 = document.createElement('div'); newPanel.appendChild(panel1);
+      createApp(SubPanel).mount(panel1)
 
-        console.log('[ExamplePluginVue] Vue panel registered', newPanel.outerHTML);
+      // vue panel 2
+      // 选项式 API
+      const panel2 = document.createElement('div'); newPanel.appendChild(panel2);
+      createApp({
+        data() {
+          return { text: '(2) 选项式 Option API' }
+        },
+        template: `<div>{{ text }}</div>`
+      }).mount(panel2)
+
+      // vue panel 3
+      // 组合式 API 的 Setup 函数
+      const panel3 = document.createElement('div'); newPanel.appendChild(panel3);
+      createApp({
+        setup() {
+          const count = ref(1)
+          return { count }
+        },
+        template: `<div>(3) 组合式 Composition API, count: {{ count }}</div>`
+      }).mount(panel3)
+
+      // vue panel 4
+      // 组合式 API 的 Render 函数
+      const panel4 = document.createElement('div'); newPanel.appendChild(panel4);
+      createApp({
+        render() {
+          return h('div', '(4) 组合式 Render API')
+        }
+      }).mount(panel4);
+
+      console.log('[ExamplePluginVue] Vue panel registered', newPanel.outerHTML);
     }
 
     // 文本输出示例
