@@ -24,6 +24,34 @@ $ npm run build
 
 然后使用 vue:
 
+(1) 添加 vue 依赖
+
 ```bash
 npm install vue
+```
+
+(2) 修改 vite.config.js 的 define
+
+主要是使其脱离 process (node.js) 依赖
+
+(3) 使用 vue 挂载到面板元素
+
+index.ts
+
+```ts
+import { createApp } from 'vue';
+
+...
+
+const newPanel = document.createElement('div');
+ctx.api.registerSubPanel({
+    id: 'example-plugin-vue-panel',
+    el: newPanel
+})
+
+// 使用 Vue 渲染组件
+const app = createApp({
+  ...
+});
+app.mount(newPanel);
 ```

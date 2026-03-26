@@ -14,6 +14,7 @@
 import cssText from './style.css?inline';
 
 import type { PluginInterface, PluginInterfaceCtx } from '../types/any-menu';
+import { createApp, h } from 'vue';
 
 let cache_ctx: PluginInterfaceCtx | undefined
 
@@ -42,21 +43,41 @@ export default class ExamplePluginVue implements PluginInterface {
     // 注册面板示例
     if (!cache_ctx) {
       cache_ctx = ctx
-        const newPanel = document.createElement('div'); newPanel.innerText = 'New Panel Content';
+        const newPanel = document.createElement('div'); newPanel.classList.add('example-plugin-vue-panel');
         ctx.api.registerSubPanel({
             id: 'example-plugin-vue-panel',
             el: newPanel
         })
+
+        // 使用 Vue 渲染组件
+        createApp({
+          // name: 'ExamplePluginVuePanel',
+          // template: `
+          //   <div class="example-plugin-vue-panel-content">
+          //     <h2>Hello from Vue Panel!</h2>
+          //     <p>This is a panel registered by ExamplePluginVue.</p>
+          //   </div>
+          // `,
+          render() {
+            return h('div', 'New Vue Panel Content')
+          }
+        }).mount(newPanel);
+
+        console.log('[ExamplePluginVue] Vue panel registered', newPanel.outerHTML);
     }
 
     // 文本输出示例
     const selected = ctx.env.selectedText;
-    if (selected) {
+    if (selected && selected.trim() !== '') {
       // 如果有选中文本，在其后追加问候
       ctx.api.sendText(`${selected} — Hello World!`);
     } else {
       // 否则直接输出
-      ctx.api.sendText('Hello World!');
+      // ctx.api.sendText('Hello World!');
+
+      // 否则显示面板
+      ctx.api.hidePanel(['menu'])
+      ctx.api.showPanel(['example-plugin-vue-panel'])
     }
 
     ctx.api.notify('Hello World plugin executed ✅');

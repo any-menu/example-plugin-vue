@@ -17,4 +17,9 @@ export default defineConfig({
     outDir: 'dist',
     minify: false,
   },
+  define: { // 无 node 环境
+    'process.env.NODE_ENV': JSON.stringify('production'),
+    'process.env': {},
+    'process': {},
+  }
 });
