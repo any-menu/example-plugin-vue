@@ -102,16 +102,16 @@ export default class ExamplePluginVue implements PluginInterface {
     const selected = ctx.env.selectedText;
     if (selected && selected.trim() !== '') {
       // 如果有选中文本，在其后追加问候
-      ctx.api.sendText(`${selected} — Hello World!`);
+      ctx.api.sendText(`${selected} — ExamplePluginVue!`);
     } else {
       // 否则直接输出
-      // ctx.api.sendText('Hello World!');
+      // ctx.api.sendText('ExamplePluginVue!');
 
       // 否则显示面板
       ctx.api.hidePanel(['menu'])
       ctx.api.showPanel(['example-plugin-vue-panel'])
     }
 
-    ctx.api.notify('Hello World plugin executed ✅');
+    ctx.api.notify('ExamplePluginVue plugin executed ✅');
   }
 }
