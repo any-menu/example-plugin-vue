@@ -1,7 +1,7 @@
 /**
- * AnyMenu Plugin: Hello World
+ * AnyMenu Plugin
  *
- * Template for AnyMenu plugin development.
+ * Template for AnyMenu plugin development based on Vue.
  * Implements PluginInterface with TypeScript class syntax.
  */
 
