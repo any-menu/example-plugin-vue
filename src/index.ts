@@ -58,19 +58,25 @@ export default class ExamplePluginVue implements PluginInterface {
       createApp(SubPanel).mount(panel1)
 
       // vue panel 2
-      // 组合式 API 的 Render 函数
+      // 组合式 API + Render
       const panel2 = document.createElement('div'); newPanel.appendChild(panel2);
       createApp({
-        render() {
-          return h('div', '(2) 组合式 Render API')
+        setup() {
+          const count = ref(0);
+          return () => h('div', [
+            h('div', `(2) 组合式 API + Render`),
+            h('button', { onClick: () => count.value++ }, `Count: ${count.value}`),
+          ])
         }
+        // 或直接 render 也行
+        // render() {
+        //   return h('div', '(2) 组合式 API + Render')
+        // }
       }).mount(panel2);
 
-      console.log('[ExamplePluginVue] Vue panel registered', newPanel.outerHTML);
-
       // vue panel 3
-      // 选项式 API
-      // 注意: 该 template 需要完整 vue 而非 runtime-only 版本支持。该 demo 默认不支持。如果需要，可根据 README 中的说明配置
+      // 选项式 API + Template
+      // 注意: 这里的 Template 需要完整 vue 而非 runtime-only 版本支持。该 demo 默认不支持。如果需要，可根据 README 中的说明配置
       const panel3 = document.createElement('div'); newPanel.appendChild(panel3);
       createApp({
         data() {
@@ -80,8 +86,8 @@ export default class ExamplePluginVue implements PluginInterface {
       }).mount(panel3)
 
       // vue panel 4
-      // 组合式 API 的 Setup 函数
-      // 注意: 该 template 需要完整 vue 而非 runtime-only 版本支持。该 demo 默认不支持。如果需要，可根据 README 中的说明配置
+      // 组合式 API + Template
+      // 注意: 这里的 Template 需要完整 vue 而非 runtime-only 版本支持。该 demo 默认不支持。如果需要，可根据 README 中的说明配置
       const panel4 = document.createElement('div'); newPanel.appendChild(panel4);
       createApp({
         setup() {
