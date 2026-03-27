@@ -52,41 +52,44 @@ export default class ExamplePluginVue implements PluginInterface {
       })
 
       // vue panel 1
-      // Vue SFC 组件 (需要 vue loader 依赖支持)
+      // Vue SFC 组件
+      // 注意: 该写法需要 vue loader 依赖支持。该 demo 默认支持。如果你不需要，可根据 README 中的说明卸载相关依赖
       const panel1 = document.createElement('div'); newPanel.appendChild(panel1);
       createApp(SubPanel).mount(panel1)
 
       // vue panel 2
-      // 选项式 API
+      // 组合式 API 的 Render 函数
       const panel2 = document.createElement('div'); newPanel.appendChild(panel2);
       createApp({
-        data() {
-          return { text: '(2) 选项式 Option API' }
-        },
-        template: `<div>{{ text }}</div>`
-      }).mount(panel2)
+        render() {
+          return h('div', '(2) 组合式 Render API')
+        }
+      }).mount(panel2);
+
+      console.log('[ExamplePluginVue] Vue panel registered', newPanel.outerHTML);
 
       // vue panel 3
-      // 组合式 API 的 Setup 函数
+      // 选项式 API
+      // 注意: 该 template 需要完整 vue 而非 runtime-only 版本支持。该 demo 默认不支持。如果需要，可根据 README 中的说明配置
       const panel3 = document.createElement('div'); newPanel.appendChild(panel3);
+      createApp({
+        data() {
+          return { text: '(3) 选项式 Option API' }
+        },
+        template: `<div>{{ text }}</div>`
+      }).mount(panel3)
+
+      // vue panel 4
+      // 组合式 API 的 Setup 函数
+      // 注意: 该 template 需要完整 vue 而非 runtime-only 版本支持。该 demo 默认不支持。如果需要，可根据 README 中的说明配置
+      const panel4 = document.createElement('div'); newPanel.appendChild(panel4);
       createApp({
         setup() {
           const count = ref(1)
           return { count }
         },
-        template: `<div>(3) 组合式 Composition API, count: {{ count }}</div>`
-      }).mount(panel3)
-
-      // vue panel 4
-      // 组合式 API 的 Render 函数
-      const panel4 = document.createElement('div'); newPanel.appendChild(panel4);
-      createApp({
-        render() {
-          return h('div', '(4) 组合式 Render API')
-        }
-      }).mount(panel4);
-
-      console.log('[ExamplePluginVue] Vue panel registered', newPanel.outerHTML);
+        template: `<div>(4) 组合式 Composition API, count: {{ count }}</div>`
+      }).mount(panel4)
     }
 
     // 文本输出示例

@@ -22,7 +22,7 @@ $ npm run build
 
 (1) 基于 plugin-simple
 
-先基于 [any-menu/example-plugin-simple](https://github.com/any-menu/example-plugin-simple)
+先基于 [any-menu/example-plugin-simple](https://github.com/any-menu/example-plugin-simple) 的从零生成说明
 
 然后使用 vue:
 
@@ -58,7 +58,9 @@ const app = createApp({
 app.mount(newPanel);
 ```
 
-(5) (可选) 支持 .vue 文件
+(5) (可选, 推荐) 支持 .vue 文件
+
+推荐原因: vue 模板会在构建时预编译好，打包结果不需要编译器，只需要用运行时vue。体积不会增加
 
 如果你需要支持 .vue 文件，那么需要其他依赖
 
@@ -108,4 +110,26 @@ import MyComponent from './MyComponent.vue'
 
 const app = createApp(MyComponent)
 app.mount('#target-element')
+```
+
+(6) (可选, 不推荐) runtime-only 改完整 vue
+
+不推荐原因: 完整版带编译器，体积更大
+
+关于运行时和完整版 vue 的区别可以自己搜，或见我文档库中的 《Vue完整版与runtime运行时版》
+
+vite 打包 vue 项目时，默认使用的是只包含运行时版 vue.runtime.js，
+而非引入完整的 vue.js 或 vue.min.js，
+这样可以大大减少体积
+
+当然，如果你想要支持非 vue 文件的, createApp 中的 template api 方法，则需要完整 vue。例如:
+
+```ts
+createApp({
+  setup() {
+    const count = ref(1)
+    return { count }
+  },
+  template: `<div>(3) 组合式 Composition API, count: {{ count }}</div>`
+}).mount(panel4)
 ```
