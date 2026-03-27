@@ -63,7 +63,7 @@ export interface PluginInterfaceCtx {
     /** 显示面板（低风险） */
     showPanel: (list?: string[]) => void;
     /** 注册子面板（中风险） */
-    registerSubPanel: (options: { id: string; el: HTMLElement }) => void;
+    registerSubPanel: (options: { id: string, el: HTMLElement|((el: HTMLElement) => void) }) => void;
     /** 注销子面板 */
     unregisterSubPanel: (id: string) => void;
   };
