@@ -34,7 +34,12 @@ npm install vue
 
 (3) 修改 vite.config.js 的 define
 
-主要是使其脱离 process (node.js) 依赖
+做法参考 vite.config.js 的 define
+
+主要是使其脱离 process (node.js) 依赖，否则编译结果 main.js 中会直接使用只能在 node.js 环境中使用的 node。
+AnyMenu 加载插件时会报错: `Caused by: ReferenceError: process is not defined`
+
+此外，如此也能大大减少编译结果的尺寸
 
 (4) 使用 vue 挂载到面板元素
 
